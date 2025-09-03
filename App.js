@@ -7,6 +7,7 @@ import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 import { GlobalStyles } from "./constants/styles";
 import { Ionicons } from "@expo/vector-icons";
+import Button from "./components/Button";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -19,6 +20,9 @@ function ExpensesOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({ tintColor }) => (
+          <Button icon="add" size={24} color={tintColor} onPress={() => {}} />
+        ),
       }}
     >
       <BottomTabs.Screen
@@ -28,7 +32,7 @@ function ExpensesOverview() {
           title: "Recent Expenses",
           tabBarLabel: "Recent",
           tabBarIcon: ({ color, size }) => {
-            <Ionicons name="hourglass" size={size} color={color} />;
+            <Ionicons name="hourglass" size={24} color="white" />;
           },
         }}
       />
@@ -39,7 +43,7 @@ function ExpensesOverview() {
           title: "All Expenses",
           tabBarLabel: "All",
           tabBarIcon: ({ color, size }) => {
-            <Ionicons name="calendar" size={size} color={color} />;
+            <Ionicons name="calendar" size={24} color="white" />;
           },
         }}
       />
