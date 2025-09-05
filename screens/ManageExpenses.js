@@ -5,6 +5,7 @@ import { GlobalStyles } from "../constants/styles";
 import { StyleSheet } from "react-native";
 import CustomButton from "../components/CustomButton";
 import { ExpensesContext } from "../store/expenses-contex";
+import ExpenseForm from "../components/ExpenseForm";
 
 function ManageExpenses({ route, navigation }) {
   const expensesContext = useContext(ExpensesContext);
@@ -45,6 +46,7 @@ function ManageExpenses({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttons}>
         <CustomButton mode="flat" onPress={cancelHandelr} style={styles.button}>
           Cancel
