@@ -12,6 +12,10 @@ function ManageExpenses({ route, navigation }) {
   const editedExpenseID = route.params?.expenseID;
   const isEditing = !!editedExpenseID;
 
+  const selectedExpense = expensesContext.expenses.find(
+    (expense) => expense.id === editedExpenseID
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add a New Expense",
@@ -27,34 +31,23 @@ function ManageExpenses({ route, navigation }) {
     navigation.goBack();
   }
 
-  function confirmHandler() {
+  function confirmHandler(expenseData) {
     if (isEditing) {
-      expensesContext.updateExpense(editedExpenseID, {
-        description: "Test!",
-        amount: 19.99,
-        date: new Date("2025-09-03"),
-      });
+      expensesContext.updateExpense(editedExpenseID, expenseData);
     } else {
-      expensesContext.addExpense({
-        description: "Test",
-        amount: 12.99,
-        date: new Date("2025-09-04"),
-      });
+      expensesContext.addExpense(expenseData);
     }
     navigation.goBack();
   }
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-      <View style={styles.buttons}>
-        <CustomButton mode="flat" onPress={cancelHandelr} style={styles.button}>
-          Cancel
-        </CustomButton>
-        <CustomButton onPress={confirmHandler} style={styles.button}>
-          {isEditing ? "Update" : "Add"}
-        </CustomButton>
-      </View>
+      <ExpenseForm
+        onCancel={cancelHandelr}
+        onSubmit={confirmHandler}
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        defaultValue={selectedExpense}
+      />
       {isEditing && (
         <View style={styles.trash}>
           <Button
@@ -83,14 +76,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: GlobalStyles.colors.primary200,
     alignItems: "center",
-  },
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
   },
 });
